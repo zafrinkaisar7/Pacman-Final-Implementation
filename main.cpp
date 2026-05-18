@@ -182,5 +182,41 @@ void generateMaze(){
     maze[2][1] = 0;
     maze[2][2] = 0;
 }
+// ================= DRAW MAZE =================
+
+void drawMaze(){
+
+    for(int i=0;i<ROWS;i++){
+
+        for(int j=0;j<COLS;j++){
+
+            // WALL
+            if(maze[i][j] == 1){
+
+                glColor3f(0,0,1);
+
+                glRectf(
+                    j*TILE,
+                    i*TILE,
+                    (j+1)*TILE,
+                    (i+1)*TILE
+                );
+            }
+
+            // FOOD
+            else if(maze[i][j] == 0){
+
+                glColor3f(1,1,1);
+
+                glRectf(
+                    j*TILE + TILE/2 - 2,
+                    i*TILE + TILE/2 - 2,
+                    j*TILE + TILE/2 + 2,
+                    i*TILE + TILE/2 + 2
+                );
+            }
+        }
+    }
+}
 
 
