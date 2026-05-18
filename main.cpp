@@ -142,4 +142,45 @@ void showLeaderboard(){
     file.close();
 }
 
+// ================= MAZE =================
+
+void generateMaze(){
+
+    for(int i=0;i<ROWS;i++){
+
+        for(int j=0;j<COLS;j++){
+
+            if(i==0 || j==0 ||
+               i==ROWS-1 ||
+               j==COLS-1){
+
+                maze[i][j] = 1;
+            }
+
+            else{
+
+                if(i <= 3 && j <= 3){
+
+                    maze[i][j] = 0;
+                }
+
+                else{
+
+                    maze[i][j] =
+                    (rand()%100 < 18)
+                    ? 1 : 0;
+                }
+            }
+        }
+    }
+
+    pacX = 1;
+    pacY = 1;
+
+    maze[1][1] = 0;
+    maze[1][2] = 0;
+    maze[2][1] = 0;
+    maze[2][2] = 0;
+}
+
 
