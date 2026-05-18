@@ -364,4 +364,25 @@ void movePacman(){
         }
     }
 }
+// ================= MOVE GHOSTS =================
+
+void moveGhosts(){
+
+    for(auto &g : ghosts){
+
+        int dir = rand()%4;
+
+        int dx[4] = {1,-1,0,0};
+        int dy[4] = {0,0,1,-1};
+
+        int nx = g.x + dx[dir];
+        int ny = g.y + dy[dir];
+
+        if(maze[ny][nx] != 1){
+
+            g.x = nx;
+            g.y = ny;
+        }
+    }
+}
 
