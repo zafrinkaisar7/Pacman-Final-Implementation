@@ -52,4 +52,31 @@ struct Ghost{
 
 vector<Ghost> ghosts;
 
+// ================= SOUND =================
+
+void playBackgroundMusic(){
+
+    mciSendString(
+        "close bgm",
+        NULL,
+        0,
+        NULL
+    );
+
+    mciSendString(
+        "open \"bg.wav\" type waveaudio alias bgm",
+        NULL,
+        0,
+        NULL
+    );
+
+    mciSendString(
+        "play bgm repeat",
+        NULL,
+        0,
+        NULL
+    );
+}
+
+
 
