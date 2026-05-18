@@ -79,4 +79,20 @@ void playBackgroundMusic(){
 }
 
 
+void stopBackgroundMusic(){
+
+    mciSendString(
+        "stop bgm",
+        NULL,
+        0,
+        NULL
+    );
+
+    mciSendString(
+        "close bgm",
+        NULL,
+        0,
+        NULL
+    );
+}
 
