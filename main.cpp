@@ -95,4 +95,21 @@ void stopBackgroundMusic(){
         NULL
     );
 }
+void playEatSound(){
+
+    PlaySound(
+        TEXT("eat.wav"),
+        NULL,
+        SND_ASYNC | SND_FILENAME
+    );
+}
+
+void playDeathSound(){
+
+    PlaySound(
+        TEXT("death.wav"),
+        NULL,
+        SND_FILENAME | SND_SYNC
+    );
+}
 
