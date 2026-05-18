@@ -342,4 +342,26 @@ void drawGhost(Ghost &g){
     }
 }
 
+// ================= MOVE PACMAN =================
+
+void movePacman(){
+
+    int nx = pacX + dirX;
+    int ny = pacY + dirY;
+
+    if(maze[ny][nx] != 1){
+
+        pacX = nx;
+        pacY = ny;
+
+        if(maze[ny][nx] == 0){
+
+            maze[ny][nx] = -1;
+
+            score += 10;
+
+            playEatSound();
+        }
+    }
+}
 
