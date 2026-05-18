@@ -112,4 +112,34 @@ void playDeathSound(){
         SND_FILENAME | SND_SYNC
     );
 }
+// ================= SAVE SCORE =================
+
+void saveScore(){
+
+    ofstream file("leaderboard.txt", ios::app);
+
+    file << playerName << " " << score << "\n";
+
+    file.close();
+}
+
+// ================= SHOW LEADERBOARD =================
+
+void showLeaderboard(){
+
+    ifstream file("leaderboard.txt");
+
+    string name;
+    int sc;
+
+    cout << "\n===== LEADERBOARD =====\n";
+
+    while(file >> name >> sc){
+
+        cout << name << " : " << sc << endl;
+    }
+
+    file.close();
+}
+
 
