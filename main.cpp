@@ -37,6 +37,7 @@ string playerName;
 
 bool inMenu = true;
 bool gameOver = false;
+bool gameWon = false;
 
 float mouthAngle = 30;
 bool opening = true;
@@ -78,7 +79,6 @@ void playBackgroundMusic(){
     );
 }
 
-
 void stopBackgroundMusic(){
 
     mciSendString(
@@ -95,6 +95,7 @@ void stopBackgroundMusic(){
         NULL
     );
 }
+
 void playEatSound(){
 
     PlaySound(
@@ -112,6 +113,7 @@ void playDeathSound(){
         SND_FILENAME | SND_SYNC
     );
 }
+
 // ================= SAVE SCORE =================
 
 void saveScore(){
@@ -146,42 +148,79 @@ void showLeaderboard(){
 
 void generateMaze(){
 
+    int temp[ROWS][COLS] = {
+
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+
+        {1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
+
+        {1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1},
+
+        {1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1},
+
+        {1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1},
+
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1},
+
+        {1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1},
+
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1},
+
+        {1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1},
+
+        {1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1},
+
+        {1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1},
+
+        {1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+
+        {1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,0,1},
+
+        {1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1},
+
+        {1,0,1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1},
+
+        {1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1},
+
+        {1,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,0,1},
+
+        {1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1},
+
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
+
     for(int i=0;i<ROWS;i++){
 
         for(int j=0;j<COLS;j++){
 
-            if(i==0 || j==0 ||
-               i==ROWS-1 ||
-               j==COLS-1){
-
-                maze[i][j] = 1;
-            }
-
-            else{
-
-                if(i <= 3 && j <= 3){
-
-                    maze[i][j] = 0;
-                }
-
-                else{
-
-                    maze[i][j] =
-                    (rand()%100 < 18)
-                    ? 1 : 0;
-                }
-            }
+            maze[i][j] = temp[i][j];
         }
     }
 
     pacX = 1;
     pacY = 1;
-
-    maze[1][1] = 0;
-    maze[1][2] = 0;
-    maze[2][1] = 0;
-    maze[2][2] = 0;
 }
+
+// ================= CHECK WIN =================
+
+bool allFoodEaten(){
+
+    for(int i=0;i<ROWS;i++){
+
+        for(int j=0;j<COLS;j++){
+
+            if(maze[i][j] == 0){
+
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 // ================= DRAW MAZE =================
 
 void drawMaze(){
@@ -218,6 +257,7 @@ void drawMaze(){
         }
     }
 }
+
 // ================= DRAW PACMAN =================
 
 void drawPacman(){
@@ -268,6 +308,7 @@ void drawPacman(){
 
     glEnd();
 }
+
 // ================= DRAW GHOST =================
 
 void drawGhost(Ghost &g){
@@ -349,7 +390,9 @@ void movePacman(){
     int nx = pacX + dirX;
     int ny = pacY + dirY;
 
-    if(maze[ny][nx] != 1){
+    if(nx >= 0 && nx < COLS &&
+       ny >= 0 && ny < ROWS &&
+       maze[ny][nx] != 1){
 
         pacX = nx;
         pacY = ny;
@@ -361,9 +404,21 @@ void movePacman(){
             score += 10;
 
             playEatSound();
+
+            if(allFoodEaten()){
+
+                stopBackgroundMusic();
+
+                saveScore();
+
+                showLeaderboard();
+
+                gameWon = true;
+            }
         }
     }
 }
+
 // ================= MOVE GHOSTS =================
 
 void moveGhosts(){
@@ -378,11 +433,12 @@ void moveGhosts(){
         int nx = g.x + dx[dir];
         int ny = g.y + dy[dir];
 
-        if(maze[ny][nx] != 1){
+        if(nx >= 0 && nx < COLS &&
+           ny >= 0 && ny < ROWS &&
+           maze[ny][nx] != 1){
 
             g.x = nx;
             g.y = ny;
         }
     }
 }
-
