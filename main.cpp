@@ -218,5 +218,128 @@ void drawMaze(){
         }
     }
 }
+// ================= DRAW PACMAN =================
+
+void drawPacman(){
+
+    glColor3f(1,1,0);
+
+    glBegin(GL_TRIANGLE_FAN);
+
+    glVertex2f(
+        pacX*TILE + TILE/2,
+        pacY*TILE + TILE/2
+    );
+
+    for(int i=mouthAngle;
+        i<=360-mouthAngle;
+        i++){
+
+        float rad = i * PI / 180;
+
+        glVertex2f(
+            pacX*TILE + TILE/2 +
+            cos(rad)*TILE/2,
+
+            pacY*TILE + TILE/2 +
+            sin(rad)*TILE/2
+        );
+    }
+
+    glEnd();
+
+    // Eye
+    glColor3f(0,0,0);
+
+    glBegin(GL_POLYGON);
+
+    for(int i=0;i<360;i++){
+
+        float rad = i * PI / 180;
+
+        glVertex2f(
+            pacX*TILE + TILE/2 +
+            5 + cos(rad)*2,
+
+            pacY*TILE + TILE/2 -
+            5 + sin(rad)*2
+        );
+    }
+
+    glEnd();
+}
+// ================= DRAW GHOST =================
+
+void drawGhost(Ghost &g){
+
+    int gx = g.x*TILE + TILE/2;
+    int gy = g.y*TILE + TILE/2;
+
+    glColor3f(g.r,g.g,g.b);
+
+    glBegin(GL_POLYGON);
+
+    for(int i=0;i<180;i++){
+
+        float rad = i * PI / 180;
+
+        glVertex2f(
+            gx + cos(rad)*TILE/2,
+            gy + sin(rad)*TILE/2
+        );
+    }
+
+    glVertex2f(gx-TILE/2,gy);
+    glVertex2f(gx+TILE/2,gy);
+
+    glEnd();
+
+    // Eyes
+    glColor3f(1,1,1);
+
+    for(int k=0;k<2;k++){
+
+        int offset =
+            (k==0 ? -6 : 6);
+
+        glBegin(GL_POLYGON);
+
+        for(int i=0;i<360;i++){
+
+            float rad = i * PI / 180;
+
+            glVertex2f(
+                gx + offset +
+                cos(rad)*4,
+
+                gy - 5 +
+                sin(rad)*4
+            );
+        }
+
+        glEnd();
+
+        glColor3f(0,0,0);
+
+        glBegin(GL_POLYGON);
+
+        for(int i=0;i<360;i++){
+
+            float rad = i * PI / 180;
+
+            glVertex2f(
+                gx + offset +
+                cos(rad)*2,
+
+                gy - 5 +
+                sin(rad)*2
+            );
+        }
+
+        glEnd();
+
+        glColor3f(g.r,g.g,g.b);
+    }
+}
 
 
