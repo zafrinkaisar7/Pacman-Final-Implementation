@@ -474,4 +474,41 @@ void checkCollision(){
         }
     }
 }
+// ================= RESTART =================
+
+void restartGame(){
+
+    score = 0;
+
+    lives = 3;
+
+    gameOver = false;
+
+    gameWon = false;
+
+    inMenu = false;
+
+    pacX = 1;
+    pacY = 1;
+
+    dirX = 0;
+    dirY = 0;
+
+    generateMaze();
+
+    ghosts.clear();
+
+    ghosts.push_back({10,10,1,0,0});
+    maze[10][10] = -1;
+
+    ghosts.push_back({15,15,0,1,1});                // reset all the variables and start again
+    maze[15][15] = -1;
+
+    ghosts.push_back({5,15,1,0,1});
+    maze[5][15] = -1;
+
+    playBackgroundMusic();
+
+    glutPostRedisplay();
+}
 
