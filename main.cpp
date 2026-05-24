@@ -857,3 +857,86 @@ void mouse(
     }
 }
 
+// ================= MAIN =================
+
+int main(
+    int argc,
+    char** argv){
+
+    srand(time(0));
+
+    cout <<
+    "Enter Player Name: ";
+
+    cin >> playerName;
+
+    generateMaze();
+
+    ghosts.push_back({
+        10,10,1,0,0
+    });
+
+    maze[10][10] = -1;
+
+    ghosts.push_back({
+        15,15,0,1,1
+    });
+
+    maze[15][15] = -1;
+
+    ghosts.push_back({
+        5,15,1,0,1
+    });
+
+    /* adding more ghosts here
+    ghosts.push_back({8,8,0,1,0});*/
+
+    maze[5][15] = -1;
+
+    glutInit(
+        &argc,  //glut initialisation
+        argv
+    );
+
+    glutInitDisplayMode(
+        GLUT_DOUBLE |         //double buffering (avoid screen flickering)
+        GLUT_RGB
+    );
+
+    glutInitWindowSize(
+        WIDTH,
+        HEIGHT
+    );
+
+    glutCreateWindow(
+        "Pacman Ultimate"
+    );
+
+    glMatrixMode(
+        GL_PROJECTION
+    );
+
+    glLoadIdentity();
+
+    gluOrtho2D(
+        0,
+        WIDTH,  // 2D coordinate setup
+        HEIGHT,
+        0
+    );
+
+    glutDisplayFunc(
+        display
+    );
+
+    glutSpecialFunc(
+        keyboard
+    );
+
+    glutKeyboardFunc(
+        normalKey
+    );
+
+
+
+
