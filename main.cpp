@@ -546,3 +546,55 @@ void drawMenu(){
 }
 
 
+// ================= DISPLAY =================
+
+void display(){   // renders all
+
+    glClear(GL_COLOR_BUFFER_BIT);  // clear screen
+
+    // MENU
+    if(inMenu){
+
+        drawMenu();
+    }
+
+    // WIN SCREEN
+    else if(gameWon){
+
+        glColor3f(0,1,0);
+
+        string win =
+            "YOU WIN THE GAME!";
+
+        glRasterPos2f(
+            WIDTH/3,
+            HEIGHT/3
+        );
+
+        for(char c : win){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_TIMES_ROMAN_24,
+                c
+            );
+        }
+
+        glColor3f(1,1,1);
+
+        string sc =
+            "Final Score: " +
+            to_string(score);
+
+        glRasterPos2f(
+            WIDTH/3,
+            HEIGHT/2
+        );
+
+        for(char c : sc){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+
