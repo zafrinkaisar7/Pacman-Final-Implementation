@@ -511,4 +511,38 @@ void restartGame(){
 
     glutPostRedisplay();
 }
+// ================= MENU =================
+
+void drawMenu(){
+
+    glColor3f(0,1,0);
+
+    string title = "PACMAN GAME";
+
+    glRasterPos2f(WIDTH/6, HEIGHT/6);  // glRasterPos2f is text position
+
+    for(char c : title){
+
+        glutBitmapCharacter(    //character draw
+            GLUT_BITMAP_TIMES_ROMAN_24,
+            c
+        );
+    }
+
+    glColor3f(1,1,1);
+
+    string msg =
+        "PRESS ENTER TO START";
+
+    glRasterPos2f(WIDTH/3, HEIGHT/2);
+
+    for(char c : msg){
+
+        glutBitmapCharacter(
+            GLUT_BITMAP_HELVETICA_18,
+            c
+        );
+    }
+}
+
 
