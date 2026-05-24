@@ -442,7 +442,7 @@ void moveGhosts(){
         }
     }
 }
-/ ================= COLLISION =================
+// ================= COLLISION =================
 
 void checkCollision(){
 
@@ -937,6 +937,13 @@ int main(
         normalKey
     );
 
+    glutMouseFunc(
+        mouse
+    );
 
+    timer();
 
+    glutMainLoop();
 
+    return 0;
+}
