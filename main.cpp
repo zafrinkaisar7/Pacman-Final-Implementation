@@ -830,4 +830,30 @@ void normalKey(
         playBackgroundMusic();
     }
 }
+// ================= MOUSE =================
+
+void mouse(
+    int button,
+    int state,
+    int x,
+    int y){
+
+    if(button ==
+       GLUT_LEFT_BUTTON &&
+
+       state ==
+       GLUT_DOWN){
+
+        if((gameOver || gameWon) &&
+
+           x >= WIDTH/3 &&
+           x <= WIDTH/3 + 180 &&  //button boundary check
+
+           y >= HEIGHT/2 + 80 &&
+           y <= HEIGHT/2 + 130){
+
+            restartGame();
+        }
+    }
+}
 
