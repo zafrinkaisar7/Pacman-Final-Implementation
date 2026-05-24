@@ -749,5 +749,41 @@ void display(){   // renders all
 
     glutSwapBuffers();
 }
+// ================= TIMER =================
+
+void timer(int = 0){
+
+    if(!inMenu &&
+       !gameOver &&
+       !gameWon){
+
+        movePacman();
+
+        moveGhosts();             //Update cycle of game
+
+        checkCollision();
+
+
+        // Mouth Animation for open close mouth
+        if(opening)
+            mouthAngle += 1;
+        else
+            mouthAngle -= 1;
+
+        if(mouthAngle > 35)
+            opening = false;
+
+        if(mouthAngle < 10)
+            opening = true;
+    }
+
+    glutPostRedisplay();
+
+    glutTimerFunc(
+        180,
+        timer,                    //ghost speed inc dec reverse
+        0
+    );
+}
 
 
