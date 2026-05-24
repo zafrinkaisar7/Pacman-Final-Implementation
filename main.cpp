@@ -785,5 +785,49 @@ void timer(int = 0){
         0
     );
 }
+// ================= KEYBOARD =================
 
+void keyboard(
+    int key,
+    int,
+    int){
+
+    if(key == GLUT_KEY_LEFT){
+
+        dirX = -1;
+        dirY = 0;
+    }
+
+    if(key == GLUT_KEY_RIGHT){
+
+        dirX = 1;
+        dirY = 0;
+    }
+
+    if(key == GLUT_KEY_UP){
+
+        dirX = 0;
+        dirY = -1;
+    }
+
+    if(key == GLUT_KEY_DOWN){
+
+        dirX = 0;
+        dirY = 1;
+    }
+}
+
+void normalKey(
+    unsigned char key,  //glut keyboard callback func
+    int,
+    int){
+
+    if(key == 13 &&   //13 is ASCII val of enter, 32 space, 27 esc
+       inMenu){       // will check menu state
+
+        inMenu = false;
+
+        playBackgroundMusic();
+    }
+}
 
