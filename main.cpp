@@ -597,4 +597,157 @@ void display(){   // renders all
                 c
             );
         }
+// Restart Button
+        glColor3f(0,1,0);
+
+        glRectf(
+            WIDTH/3,
+            HEIGHT/2 + 80,
+            WIDTH/3 + 180,
+            HEIGHT/2 + 130
+        );
+
+        glColor3f(0,0,0);
+
+        string btn =
+            "PLAY AGAIN";
+
+        glRasterPos2f(
+            WIDTH/3 + 30,
+            HEIGHT/2 + 110
+        );
+
+        for(char c : btn){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+    }
+
+    // GAME OVER
+    else if(gameOver){
+
+        glColor3f(1,0,0);
+
+        string over =
+            "GAME OVER";
+
+        glRasterPos2f(
+            WIDTH/3,
+            HEIGHT/3
+        );
+
+        for(char c : over){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_TIMES_ROMAN_24,
+                c
+            );
+        }
+
+        glColor3f(1,1,1);
+
+        string player =
+            "Player: " +
+            playerName;
+
+        glRasterPos2f(
+            WIDTH/3,
+            HEIGHT/2
+        );
+
+        for(char c : player){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+
+        string sc =
+            "Final Score: " +
+            to_string(score);
+
+        glRasterPos2f(
+            WIDTH/3,
+            HEIGHT/2 + 40
+        );
+
+        for(char c : sc){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+
+        // Restart Button
+        glColor3f(0,1,0);
+
+        glRectf(
+            WIDTH/3,
+            HEIGHT/2 + 80,
+            WIDTH/3 + 180,
+            HEIGHT/2 + 130
+        );
+
+        glColor3f(0,0,0);
+
+        string btn =
+            "START AGAIN";
+
+        glRasterPos2f(
+            WIDTH/3 + 30,
+            HEIGHT/2 + 110
+        );
+
+        for(char c : btn){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+    }
+
+    // GAME
+    else{  //actual gameplay
+
+        drawMaze();
+
+        drawPacman();
+
+        for(auto &g : ghosts){
+
+            drawGhost(g);
+        }
+
+        string hud =
+            "Score: " +
+            to_string(score) +
+
+            " Lives: " +
+            to_string(lives);
+
+        glColor3f(1,1,1);
+
+        glRasterPos2f(
+            10,
+            HEIGHT-20
+        );
+
+        for(char c : hud){
+
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                c
+            );
+        }
+    }
+
+    glutSwapBuffers();
+}
+
 
