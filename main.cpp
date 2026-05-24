@@ -442,3 +442,36 @@ void moveGhosts(){
         }
     }
 }
+/ ================= COLLISION =================
+
+void checkCollision(){
+
+    for(auto &g : ghosts){
+
+        if(pacX == g.x &&  // same tile == collision (col detect)
+           pacY == g.y){
+
+            playDeathSound();
+
+            lives--;  // life incr decr
+
+            pacX = 1;
+            pacY = 1;
+
+            dirX = 0;
+            dirY = 0;
+
+            if(lives <= 0){
+
+                stopBackgroundMusic();
+
+                saveScore();
+
+                showLeaderboard();
+
+                gameOver = true;
+            }
+        }
+    }
+}
+
